@@ -15,3 +15,29 @@ app.set('views', __dirname + '/views');
 // set up public folder for css  
 
 app.use(express.static('public'));
+
+// set up bodyParser
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// set up routes 
+
+// // route to the login page when you first nav to the site (not logged in yet)
+
+app.get ("/", function(req, res){
+    res.redirect('/login')
+})
+
+app.get ("/login", function(req, res){
+    res.render('login')
+})
+
+
+// setting up port
+
+app.set('port', 3000)
+
+app.listen(app.get('port'), function () {
+  console.log('App is working, dude man.')
+})
