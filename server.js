@@ -33,6 +33,34 @@ app.get ("/login", function(req, res){
     res.render('login')
 })
 
+app.post ("/login", function(req,res){
+    res.redirect('home')
+})
+
+app.get ("/home", function(req,res){
+    res.render('home')
+})
+
+/*
+
+this allows you to go to home page but still stays on the login url
+
+    app.get ("/", function(req, res){
+    res.redirect('/login')
+})
+
+app.get ("/login", function(req, res){
+    res.render('login')
+})
+
+app.post ("/login", function(req,res){
+    res.redirect('home')
+})
+
+app.get ("/home", function(req,res){
+    res.render('home')
+})
+*/ 
 
 // setting up port
 
