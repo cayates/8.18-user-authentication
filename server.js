@@ -5,6 +5,8 @@ const mustacheExpress = require('mustache-express');
 const app = express();
 const dal = require('./dal');
 const bodyParser = require('body-parser')
+const session = require('express-session')
+
 
 // setting up mustache basics
 
@@ -21,6 +23,27 @@ app.use(express.static('public'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+// set up cookies
+
+app.use(
+    session({
+      secret: 'test secret',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { maxAge: null }
+    })
+  )
+
+  app.use(function (req, res, next) {
+    if (req.session.usr) {
+      req.isAuthenticated = true
+    } else {
+      req.isAuthenticated = false
+    }
+    console.log(req.isAuthenticated, 'session')
+    next()
+  })
+
 // set up routes 
 
 // // route to the login page when you first nav to the site (not logged in yet)
@@ -33,10 +56,23 @@ app.get ("/login", function(req, res){
     res.render('login')
 })
 
-app.post ("/login", function(req,res){
-    dal.addUser(req.body.home)
-    res.redirect('home')
+// route for when someone logs in with either correct or incorrect creds 
+
+app.get ("/incorrectpw", function(req, res){
+    res.render('incorrectpw')
 })
+
+app.post('/login', function (req, res) {
+    const sesh = req.session
+    const foundUsr = dal.getUserByUsername(req.body.username)
+    // const foundPW = dal.getUserPassword(req.body.password)
+    if (req.body.password === foundUsr.password) {
+      sesh.usr = { username: foundUsr.name }
+      res.redirect('/home')
+    } else {
+      res.redirect('/incorrectpw')
+    }
+  })
 
 app.get ("/home", function(req,res){
     res.render('home')

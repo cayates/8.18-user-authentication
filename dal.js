@@ -1,20 +1,30 @@
-
-
 // all my functions should go here
 
-let userInfo = [];
+let userInfo = [
+{id: 1, username: 'chad', password: 'yates'},
+{id: 2, username: 'lily', password: 'kerouac'}
+]
 
-function addUser(username, password){
-    let newUser = {id: (userInfo.length) + 1, username: username, password: password}
-    userInfo.push(newUser)
-    console.log(userInfo);
-}
+function getUser (userId) {
+    const foundUser = userInfo.find(usr => Number(userId) === usr.id)
+    return foundUser
+  }
 
+function getUserByUsername (usrname) {
+    const foundUser = userInfo.find(usr => usrname === usr.username)
+    return foundUser
+  }
 
+function getUserPassword (usrpw) {
+    const foundUserPW = userInfo.find(usr => usrpw === usr.userpw)
+    return foundUserPW
+  }
 
-
+console.log(userInfo);
 
 
 module.exports = {
-    addUser: addUser
+    getUser: getUser,
+    getUserByUsername: getUserByUsername,
+    getUserPassword: getUserPassword
   }
