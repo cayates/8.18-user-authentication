@@ -23,7 +23,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// set up cookies
+// set up session
 
 app.use(
     session({
@@ -65,18 +65,14 @@ app.get ("/incorrectpw", function(req, res){
 app.post('/login', function (req, res) {
     const sesh = req.session
     const foundUsr = dal.getUserByUsername(req.body.username)
-    // const foundPW = dal.getUserPassword(req.body.password)
-    if (req.body.password === foundUsr.password) {
-      sesh.usr = { username: foundUsr.name }
+    const foundPW = dal.getUserPassword(req.body.password)
+    if (req.body.password === foundUsr && req.body.username === foundPW) {
+      sesh.usr = { password: foundUsr.password}
       res.redirect('/home')
     } else {
       res.redirect('/incorrectpw')
     }
   })
-
-app.get ("/home", function(req,res){
-    res.render('home')
-})
 
 // setting up port
 

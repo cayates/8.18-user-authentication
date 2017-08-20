@@ -1,0 +1,39 @@
+functionsf
+
+function getUserByUsername (usrname) {
+    const foundUser = userInfo.find(usr => usrname === usr.username)
+    return foundUser
+  }
+
+function getUserPassword (usrpw) {
+    const foundPassWord = userInfo.find(usr => usrname === usr.password)
+    return foundPassWord
+    console.log(foundUserPW)
+  }
+
+
+requests 
+
+app.post('/login', function (req, res) {
+    const sesh = req.session
+    const foundUsr = dal.getUserByUsername(req.body.username)
+    const foundPW = dal.getUserPassword(req.body.password)
+    if (req.body.password === foundUsr.password && req.body.username === foundUsr.username) {
+      sesh.usr = { password: foundUsr.password}
+      res.redirect('/home')
+    } else {
+      res.redirect('/incorrectpw')
+    }
+  })
+
+
+app.post('/login', function (req, res) {
+  const sesh = req.session
+  const foundUsr = dal.getUserByUsername(req.body.username)
+  if (req.body.password === foundUsr.password) {
+    req.session.usr = { name: foundUsr.name }
+    res.redirect('/admin')
+  } else {
+    res.send('womp womp')
+  }
+})
