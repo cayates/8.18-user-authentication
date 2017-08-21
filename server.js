@@ -66,13 +66,45 @@ app.post('/login', function (req, res) {
     const sesh = req.session
     const foundUsr = dal.getUserByUsername(req.body.username)
     const foundPW = dal.getUserPassword(req.body.password)
-    if (req.body.password === foundUsr && req.body.username === foundPW) {
-      sesh.usr = { password: foundUsr.password}
+    if (req.body.password === foundUsr.password ) {
+      sesh.usr = { name: foundUsr.name, password: foundUsr.password }
       res.redirect('/home')
     } else {
       res.redirect('/incorrectpw')
     }
   })
+
+//  this post works so if credentials match its good but username does not work right
+
+// app.post('/login', function (req, res) {
+//   const sesh = req.session
+//   const foundUsr = dal.getUserByUsername(req.body.username)
+//   if (req.body.password === foundUsr.password) {
+//     sesh.usr = { password: foundUsr.password}
+//     res.redirect('/home')
+//   } else {
+//     res.redirect('/incorrectpw')
+//   }
+// })
+
+// end 
+
+// this works to where all combos redirect to incorrect login page
+
+// app.post('/login', function (req, res) {
+//   const sesh = req.session
+//   const foundUsr = dal.getUserByUsername(req.body.username)
+//   if (req.body.password === foundUsr.password) {
+//     req.session.usr = { name: foundUsr.name }
+//     res.redirect('/admin')
+//   } else {
+//     res.send('womp womp')
+//   }
+// })
+
+app.get ("/home", function(req,res){
+    res.render('home')
+})
 
 // setting up port
 

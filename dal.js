@@ -4,14 +4,13 @@ let userInfo = [
 ]
 
 function getUserByUsername (usrname) {
-    const foundUser = userInfo.find(usr => usrname === usr.password)
+    const foundUser = userInfo.find(usr => usrname === usr.username)
     return foundUser
   }
 
   function getUserPassword (usrpw) {
-    const foundPassWord = userInfo.find(usr => usrpw === usrpw.password)
+    const foundPassWord = userInfo.find(usrpw => usrpw === usrpw.password)
     return foundPassWord
-    console.log(foundPassWord)
   }
 
   function getUsers () {
@@ -21,8 +20,4 @@ function getUserByUsername (usrname) {
 console.log(userInfo);
 
 
-module.exports = {
-    getUserByUsername,
-    getUserPassword,
-    getUsers
-  }
+module.exports = { getUserByUsername, getUserPassword, getUsers }
