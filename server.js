@@ -63,16 +63,38 @@ app.get ("/incorrectpw", function(req, res){
 })
 
 app.post('/login', function (req, res) {
-    const sesh = req.session
-    const foundUsr = dal.getUserByUsername(req.body.username)
-    const foundPW = dal.getUserPassword(req.body.password)
-    if (req.body.password === foundUsr.password ) {
-      sesh.usr = { name: foundUsr.name, password: foundUsr.password }
-      res.redirect('/home')
-    } else {
-      res.redirect('/incorrectpw')
-    }
-  })
+  const sesh = req.session
+  const foundUsr = dal.getUserByUsername(req.body.username)
+  const foundPW = dal.getUserPassword(req.body.password)
+  if (foundUsr) {
+    sesh.usr = { username: foundUsr.username }
+    res.redirect('/home')
+  } else if (foundPW){
+    sesh.usr = { password: foundPW.password }
+    res.redirect('/home')
+  } else {
+    res.redirect('/incorrectpw')
+  }
+})
+ 
+
+
+  // app.post("/login", (req, res) => {
+  //   const sesh = req.session;
+  //   console.log(req.body.user_name);
+  //   const foundUser = dal.getByName(req.body.user_name);
+  //   console.log(foundUser);
+  //   if (!foundUser) {
+  //     console.log("iffing");
+  //     res.send("Please enter a valid username");
+  //   } else if (req.body.password === foundUser.password) {
+  //     console.log("If statement");
+  //     req.session.user = { name: foundUser.first_name };
+  //     res.redirect("/");
+  //   } else {
+  //     res.send("Please enter a valid password.");
+  //   }
+  // });
 
 //  this post works so if credentials match its good but username does not work right
 

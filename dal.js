@@ -1,6 +1,6 @@
 let userInfo = [
-    {id: 1, username: 'chad', password: 'yates'},
-    {id: 2, username: 'lily', password: 'kerouac'}
+    {username: 'chad', password: 'yates'},
+    {username: 'lily', password: 'kerouac'}
 ]
 
 function getUserByUsername (usrname) {
@@ -9,7 +9,7 @@ function getUserByUsername (usrname) {
   }
 
   function getUserPassword (usrpw) {
-    const foundPassWord = userInfo.find(usrpw => usrpw === usrpw.password)
+    const foundPassWord = userInfo.find(usr => usrpw === usrpw.password)
     return foundPassWord
   }
 
