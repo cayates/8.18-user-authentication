@@ -6,11 +6,13 @@ let userInfo = [
 function getUserByUsername (usrname) {
     const foundUser = userInfo.find(usr => usrname === usr.username)
     return foundUser
+    console.log(foundUser)
   }
 
   function getUserPassword (usrpw) {
-    const foundPassWord = userInfo.find(usr => usrpw === usrpw.password)
+    const foundPassWord = userInfo.find(usr => usrpw === usr.password)
     return foundPassWord
+    console.log(getUserPassword)
   }
 
   function getUsers () {

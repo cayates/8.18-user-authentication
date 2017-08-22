@@ -66,14 +66,14 @@ app.post('/login', function (req, res) {
   const sesh = req.session
   const foundUsr = dal.getUserByUsername(req.body.username)
   const foundPW = dal.getUserPassword(req.body.password)
-  if (foundUsr) {
-    sesh.usr = { username: foundUsr.username }
-    res.redirect('/home')
-  } else if (foundPW){
-    sesh.usr = { password: foundPW.password }
-    res.redirect('/home')
-  } else {
+  if (!foundUsr) {
+    // sesh.usr = { username: foundUsr.username }
     res.redirect('/incorrectpw')
+  } else if (!foundPW){
+    // sesh.usr = { password: foundPW.password }
+    res.redirect('/incorrectpw')
+  } else {
+    res.redirect('/home')
   }
 })
  
