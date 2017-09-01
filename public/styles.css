@@ -2,4 +2,17 @@ body {
     background-color: peachpuff;
     text-align: center;
 }
+.logout {
+
+}
+.gifs {
+    display: flex;
+    justify-content: space-around;
+}
+img {
+    width: 70%;
+    margin: 35px;
+    border-style: hidden;
+    border-radius: 50%;
+}
 

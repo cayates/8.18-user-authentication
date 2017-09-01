@@ -7,7 +7,6 @@ const dal = require('./dal');
 const bodyParser = require('body-parser')
 const session = require('express-session')
 
-
 // setting up mustache basics
 
 app.engine('mustache', mustacheExpress());
@@ -53,6 +52,7 @@ app.get ("/", function(req, res){
 })
 
 app.get ("/login", function(req, res){
+    req.session.destroy()
     res.render('login')
 })
 
@@ -73,59 +73,33 @@ app.post('/login', function (req, res) {
     // sesh.usr = { password: foundPW.password }
     res.redirect('/incorrectpw')
   } else {
+    req.session.usr = foundUsr
     res.redirect('/home')
   }
 })
- 
-
-
-  // app.post("/login", (req, res) => {
-  //   const sesh = req.session;
-  //   console.log(req.body.user_name);
-  //   const foundUser = dal.getByName(req.body.user_name);
-  //   console.log(foundUser);
-  //   if (!foundUser) {
-  //     console.log("iffing");
-  //     res.send("Please enter a valid username");
-  //   } else if (req.body.password === foundUser.password) {
-  //     console.log("If statement");
-  //     req.session.user = { name: foundUser.first_name };
-  //     res.redirect("/");
-  //   } else {
-  //     res.send("Please enter a valid password.");
-  //   }
-  // });
-
-//  this post works so if credentials match its good but username does not work right
 
 // app.post('/login', function (req, res) {
 //   const sesh = req.session
 //   const foundUsr = dal.getUserByUsername(req.body.username)
-//   if (req.body.password === foundUsr.password) {
-//     sesh.usr = { password: foundUsr.password}
-//     res.redirect('/home')
-//   } else {
+//   const foundPW = dal.getUserPassword(req.body.password)
+//   if (!foundUsr && req.isAuthenticated === false) {
+//     // sesh.usr = { username: foundUsr.username }
 //     res.redirect('/incorrectpw')
-//   }
-// })
-
-// end 
-
-// this works to where all combos redirect to incorrect login page
-
-// app.post('/login', function (req, res) {
-//   const sesh = req.session
-//   const foundUsr = dal.getUserByUsername(req.body.username)
-//   if (req.body.password === foundUsr.password) {
-//     req.session.usr = { name: foundUsr.name }
-//     res.redirect('/admin')
-//   } else {
-//     res.send('womp womp')
+//   } else if (!foundPW && req.isAuthenticated === false){
+//     // sesh.usr = { password: foundPW.password }
+//     res.redirect('/incorrectpw')
+//   } else if (foundPW && foundUsr && req.isAuthenticated === true){
+//     res.redirect('/home')
 //   }
 // })
 
 app.get ("/home", function(req,res){
-    res.render('home')
+  console.log('req.usr', req.session.usr)
+    if (req.isAuthenticated){
+     return res.render('home', { name: req.session.usr.username})
+    }
+      res.render('login')
+
 })
 
 // setting up port

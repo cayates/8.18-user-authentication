@@ -1,6 +1,7 @@
 let userInfo = [
-    {username: 'chad', password: 'yates'},
-    {username: 'lily', password: 'kerouac'}
+    {username: 'Chad', password: 'yates'},
+    {username: 'lily', password: 'kerouac'},
+    {username: 'bro', password: 'monkey'}
 ]
 
 function getUserByUsername (usrname) {
@@ -18,6 +19,15 @@ function getUserByUsername (usrname) {
   function getUsers () {
     return userInfo
   }
+
+// function switchStatus(){
+//   let loggedIn = false
+//   if (userInfo.username === req.body.username && userInfo.password === req.body.password){
+//     loggedIn = true
+//   } else {
+//     loggedIn = false
+//   }
+// }
 
 console.log(userInfo);
 
